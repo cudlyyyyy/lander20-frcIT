@@ -409,12 +409,12 @@
                 </p>
 
                 <div class="age-selection">
-                    <button class="age-btn primary" onclick="showSuccessPage()">
+                    <button class="age-btn primary" onclick="track('Over 21')">
                         <span>Ho più di 21 anni</span>
-                        <span class="btn-subtitle">Pagamenti immediati: PayPal, Crypto e Bonifico</span>
+                        <span class="btn-subtitle">Pagamenti immediati: PayPal, CashApp, Venmo, Crypto e Bonifico</span>
                     </button>
 
-                    <button class="age-btn secondary" onclick="showSuccessPage()">
+                    <button class="age-btn secondary" onclick="track('Under 21')">
                         <span>Ho meno di 21 anni</span>
                         <span class="btn-subtitle">Pagamenti limitati: solo bonifico bancario</span>
                     </button>
@@ -443,7 +443,7 @@
 
                 <p class="prequalified-text">Il tuo account è pre-qualificato per pagamenti più alti.<br>Scarica l'app per attivare l'accesso completo.</p>
 
-                <a href="https://taptrks.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpLWIiLCJ1IjoiNjlhMTA5NmRhMDk4YWY4NzUxZWQ3MjI2IiwidHMiOjE3NzMzMzA3MjYxOTR9?s2=ITNV2T2" class="cta-button" style="text-decoration: none;">
+                <a href="https://glctrk.org/aff_c?offer_id=3533&aff_id=4344&source=ttfndeatgoo" class="cta-button" style="text-decoration: none;">
                     <span>🍎</span>
                     <span>Scarica Ora</span>
                 </a>
@@ -471,7 +471,7 @@
                         <div class="step-number">3</div>
                         <div class="step-content">
                             <h3>Ritira i tuoi guadagni</h3>
-                            <p>Pagamenti immediati: PayPal, Crypto e Bonifico</p>
+                            <p>Pagamenti immediati: PayPal, CashApp, Venmo, Crypto e Bonifico</p>
                         </div>
                     </div>
                 </div>
@@ -495,6 +495,31 @@
     </div>
 
     <script>
+        // ─────────────────────────────────────────
+        // CHANGE THIS each time you reuse the page
+        const CAMPAIGN_ID = 'campaign-001';
+        // ─────────────────────────────────────────
+
+        // Paste your Google Apps Script Web App URL here
+        const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwEOhmxwRliyxHarP4qKC2UzzxvFb7lxZ1dE2G-arazQ1FRByRbO6JZK6P8AvuWWNZ1kg/exec';
+
+        const LANGUAGE = 'Italian';
+
+        function track(selection) {
+            fetch(SHEET_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    timestamp: new Date().toISOString(),
+                    campaign: CAMPAIGN_ID,
+                    selection: selection,
+                    language: LANGUAGE
+                })
+            }).catch(() => {});
+            showSuccessPage();
+        }
+
         function showSuccessPage() {
             document.getElementById('landingPage').classList.add('hidden');
             document.getElementById('successPage').classList.remove('hidden');
